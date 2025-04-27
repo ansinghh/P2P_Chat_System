@@ -92,6 +92,7 @@ After the client starts, you’ll see:
 Client started. Type 'help' for commands.
 
 Commands:
+
 help: Show list of commands
 
 list: List online users
