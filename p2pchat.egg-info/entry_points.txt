@@ -1,0 +1,3 @@
+[console_scripts]
+p2p-chat-client = p2pchat.client:main
+p2p-discovery-server = p2pchat.discovery_server:main

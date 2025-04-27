@@ -61,7 +61,7 @@ def main():
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.bind(("", 5001))
     server_socket.listen(5)
-    print("Discovery Server listening on port 5000")
+    print("Discovery Server listening on port 5001")
     t = threading.Thread(target=cleanup_users, daemon=True)
     t.start()
 

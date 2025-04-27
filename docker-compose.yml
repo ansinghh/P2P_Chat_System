@@ -1,0 +1,41 @@
+services:
+  redis:
+    image: redis:7
+    container_name: p2pchat-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  discovery_server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: p2pchat-discovery
+    depends_on:
+      - redis
+    ports:
+      - "5001:5001"
+    command: ["python", "-m", "p2pchat.discovery_server"]
+    environment:
+      - DISCOVERY_PORT=5001
+
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: p2pchat-client
+    depends_on:
+      - redis
+      - discovery_server
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - DISCOVERY_HOST=discovery_server
+      - DISCOVERY_PORT=5001
+    stdin_open: true
+    tty: true
+    command: ["python", "-m", "p2pchat.client"]
+
+volumes:
+  redis_data:

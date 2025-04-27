@@ -6,10 +6,16 @@ import redis
 import hashlib
 import base64
 from cryptography.fernet import Fernet
+import os
 
 # The server specifications
-DISCOVERY_SERVER = ("localhost", 5001)
-REDIS_SERVER = ("localhost", 6379)
+DISCOVERY_SERVER = (
+    os.getenv("DISCOVERY_HOST", "discovery_server"),
+    int(os.getenv("DISCOVERY_PORT", 5001))
+)
+
+REDIS_SERVER = (os.getenv("REDIS_HOST", "localhost"), 6379)
+
 
 def get_chat_key(user1, user2):
     names = sorted([user1, user2])
